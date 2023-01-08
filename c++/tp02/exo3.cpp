@@ -1,15 +1,14 @@
-
-
 #include <iostream>
 #include<vector>
 
 
 using namespace std;
+template <typename T>
 
-
-
-
-void enter_matrix (int rows , int cols  , vector<vector<int>>& M)
+using matrix=vector<vector<T>> ;
+//this function takes input from the user and stores it in a 2D vector (matrix ) given as an  arguement , we're using templates so that that the matrix can be a mtrix of any type (matrix of int or floats)
+template<typename T>
+void enter_matrix (int rows , int cols  , matrix<T>& M) 
 {  
  
    
@@ -26,8 +25,9 @@ void enter_matrix (int rows , int cols  , vector<vector<int>>& M)
  } 
  
  
-
-void print_matrix (vector<vector<int>> M )
+//this function takes a matrix to be printed to te user
+template<typename T>
+void print_matrix (matrix<T> M )
 {  
  
  // int rows = sizeof(M)/sizeof(M[0]);
@@ -54,13 +54,15 @@ void print_matrix (vector<vector<int>> M )
  } 
  
  
-vector<vector<int>> multi_matrix(vector<vector<int>> M , vector<vector<int>> N)
+template<typename T>
+//this function takes row matrices and multiply them and return the reuslt matrix
+matrix <T> multi_matrix(matrix<T> M , matrix<T> N)
 {
    
    
    vector<vector<int>> mult;
    
-   mult.resize(M.size());
+   mult.resize(M.size());  //resizing (allocating memory) the matrix where we will store the reuslt of our multiplication so that it has a number of rows equal to the first matrix M and a number of columns equel to the number of the columns of the second one N
    for (int a=0;a <M.size();a++)
         { mult[a].resize(N[a].size());}
    int rows_N=N.size();
@@ -89,8 +91,9 @@ vector<vector<int>> multi_matrix(vector<vector<int>> M , vector<vector<int>> N)
        
 }
 
-
-vector<vector<int>> powrec(vector<vector<int>> M,int n)
+//using the function "multi_matrix" defined above and  generlising the binary exponeniation , we can creat a recursive function that returns the power of a matrix  in a in an optimal way
+template<typename T>
+matrix<T> powrec(matrix<T> M,int n)
 {
   
   if (n==1)
@@ -101,5 +104,4 @@ vector<vector<int>> powrec(vector<vector<int>> M,int n)
      return multi_matrix(multi_matrix(powrec(M,n/2),powrec(M,n/2)),M);
      
 }
-       
-  
+   
